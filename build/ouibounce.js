@@ -50,9 +50,17 @@ return function ouibounce(el, custom_config) {
   }
 
   function handleMouseleave(e) {
-    if (e.clientY > sensitivity) { return; }
+    var clientWidth  = window.document.documentElement.clientWidth,
+        clientHeight = window.document.documentElement.clientHeight;
 
-    _delayTimer = setTimeout(fire, delay);
+    var topLimit    = e.clientY < sensitivity,
+        rightLimit  = e.clientX > (clientWidth - sensitivity),
+        bottomLimit = e.clientY > (clientHeight - sensitivity),
+        leftLimit   = e.clientX < sensitivity;
+
+    if (topLimit || rightLimit || bottomLimit || leftLimit)  {
+      _delayTimer = setTimeout(fire, delay);
+    }
   }
 
   function handleMouseenter() {
